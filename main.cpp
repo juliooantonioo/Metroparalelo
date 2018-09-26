@@ -8,6 +8,7 @@ using namespace std;
 
 /*
  * 
+ *
  */
 int main(int argc, char** argv) {
     int my_rank;
@@ -33,7 +34,8 @@ int main(int argc, char** argv) {
     infocombis(listacombinaciones);
     int izqi=-1,izqf=-1,deri=-1,derf=-1;
     if (argv[1][0]=='-' and argv[1][1]=='f'){
-        iniciofinlineas(argv[3],argv[2], nombresredmetro, infoinicio , infofin);
+        MPI_Init(0,0);
+	iniciofinlineas(argv[3],argv[2], nombresredmetro, infoinicio , infofin);
         listacombinaciones[0]=infoinicio;
         listacombinaciones[12]=infofin;
         inicioentrenodos(listacombinaciones,entreorigen,izqi,deri);
@@ -42,7 +44,7 @@ int main(int argc, char** argv) {
         agregarnodofin(combinaciones,entredestino,izqf,derf,infofin);
         caminomascorto(combinaciones,ruta);
         obtenerruta(ruta,listacombinaciones,nombresredmetro);
-        MPI_Init(0,0);
+        
         MPI_Comm_rank(MPI_COMM_WORLD,&my_rank);
         MPI_Comm_size(MPI_COMM_WORLD,&p);
         cout<<my_rank<<" "<<infoinicio.linea1<<endl;
