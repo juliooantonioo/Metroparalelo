@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include "funciones.h"
 #include <iostream>
+#include "mpi.h"
 
 
 using namespace std;
@@ -9,6 +10,8 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
+    int my_rank;
+    int p;
     estacion infoinicio,infofin;
     int ruta[13];
     int combinaciones[13][13]={
@@ -39,6 +42,11 @@ int main(int argc, char** argv) {
         agregarnodofin(combinaciones,entredestino,izqf,derf,infofin);
         caminomascorto(combinaciones,ruta);
         obtenerruta(ruta,listacombinaciones,nombresredmetro);
+        MPI_Init(0,0);
+        MPI_Comm_rank(MPI_COMM_WORLD,&my_rank);
+        MPI_Comm_size(MPI_COMM_WORLD,&p);
+        cout<<my_rank<<" "<<infoinicio.linea1<<endl;
+        MPI_Finalize();
     }
     if (argv[1][0]=='-' and argv[1][1]=='v'){
         cout<<"Julio Vallejos Apablaza"<<endl;
